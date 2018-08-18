@@ -34,13 +34,14 @@ def privmsg(mesaj, nick):
 
 
 def console(mesaj):
+	saat = time.strftime("%H:%M:%S")
 	# :command!~command@unaffiliated/command PRIVMSG #dedeler :selam olsun
 	# :command!~command@unaffiliated/command PRIVMSG atsky_qxh :VERSION
 	msg_array = mesaj.split(" ")
 	if msg_array[0] == "PING":
 		# ping pong bağlantı kontrolü
 		sendmsg("PONG "+msg_array[1])
-		print(SAAT+" PONG "+msg_array[1])
+		print(saat+" PONG "+msg_array[1])
 	else:
 		ircnick = msg_array[0].split("!")[0].lstrip(":")
 		# irckanal bazı durumlarda privmsg gönderen kişidir yani mesajı gönderen neyse odur
@@ -58,7 +59,7 @@ def console(mesaj):
 				QUIT = 1
 			else:
 				if irckanal.startswith("#"):
-					print("{} {} {} {}".format(SAAT, irckanal, ircnick, ircmesaj))
+					print("{} {} {} {}".format(saat, irckanal, ircnick, ircmesaj))
 
 
 def my_nick():
@@ -69,7 +70,6 @@ def my_nick():
 	return nick
 
 
-SAAT = time.strftime("%H:%M:%S")
 IRC = socket.socket(family=socket.AF_INET, type=socket.SOCK_STREAM)
 IRC.settimeout(300)
 SSLIRC = ssl.wrap_socket(IRC)
